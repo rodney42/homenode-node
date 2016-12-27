@@ -30,6 +30,9 @@ function getDeviceAction(device,actionname) {
 }
 
 function addDevice(device) {
+  if( !device.id ) {
+    throw "Device ID must be set."
+  }
   devices.push(device);
   master.notifyDeviceChange();
   log('New device "'+device.name+'" registered.');
@@ -49,9 +52,10 @@ var executeDeviceAction = function(req,res) {
   if( idx==-1 ) {
     res.sendStatus(404);
   } else {
-    var action = getDeviceAction(devices[idx],req.params.actionname);
+    var device = devices[idx];
+    var action = getDeviceAction(device, req.params.actionname);
     if( action ) {
-      action.use(req,res);
+      action.use(device,action);
       res.sendStatus(200);
     } else {
       res.sendStatus(404);
