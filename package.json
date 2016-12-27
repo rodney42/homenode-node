@@ -2,7 +2,7 @@
   "name": "homenode-node",
   "version": "0.0.1",
   "description": "Homenode node library",
-  "main": "index.js",
+  "main": "homenode.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,6 +14,11 @@
   "keywords": [
     "homenode"
   ],
+  "repository" :
+  {
+    "type" : "git",
+    "url" : "https://github.com/rodney42/homenode-node.git"
+  },
   "author": "Frank Klingebiel",
   "license": "MIT"
 }
