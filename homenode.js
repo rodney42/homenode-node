@@ -9,19 +9,58 @@ var server      = http.Server(app);
 
 var devices = [];
 
-function addDevice(device) {
-  devices.push(device);
-  master.notifyDeviceChange();
-  log('New device "'+device.name+'" registered.');
-}
-
-function removeDevice(id) {
+function getDeviceIndex(id) {
   var idx=-1;
   devices.forEach(function(dev,i) {
     if( dev.id==id ) {
         idx=i;
     }
   });
+  return idx;
+}
+
+function getDeviceAction(device,actionname) {
+  var action;
+  device.actions.forEach(function(a) {
+    if( a.name == actionname ) {
+      action=a;
+    }
+  });
+  return action;
+}
+
+function addDevice(device) {
+  devices.push(device);
+  master.notifyDeviceChange();
+  log('New device "'+device.name+'" registered.');
+}
+
+var getDevice = function(req,res) {
+  var idx = getDeviceIndex(req.params.deviceid);
+  if( idx==-1 ) {
+    res.sendStatus(404);
+  } else {
+    res.send(devices[idx]);
+  }
+}
+
+var executeDeviceAction = function(req,res) {
+  var idx = getDeviceIndex(req.params.deviceid);
+  if( idx==-1 ) {
+    res.sendStatus(404);
+  } else {
+    var action = getDeviceAction(devices[idx],req.params.actionname);
+    if( action ) {
+      action.use();
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(404);
+    }
+  }
+}
+
+function removeDevice(id) {
+  var idx=getDeviceIndex(id);
   if( idx!=-1 ) {
     devices.splice(idx,1);
     master.notifyDeviceChange();
@@ -59,6 +98,23 @@ var def = {
         description : 'List devices',
         use : listDevices
       },
+      device: {
+        path : "devices/:deviceid",
+        description : "Gets a device by id",
+        parameter : {
+          deviceid : { description : "Device ID", path : true }
+        },
+        use : getDevice
+      },
+      deviceAction: {
+        path : "devices/:deviceid/:actionname",
+        description : "Executes a device action",
+        parameter : {
+          deviceid : { description : "Device ID", path : true },
+          actionname : { description : "Action name", path : true }
+        },
+        use : executeDeviceAction
+      },
       heartbeat : {
         description : 'Heartbeat endpoint service',
         use : heartbeat
@@ -85,7 +141,7 @@ function init(options) {
   var id = opt.id || 'FF';
 
   server.listen(port);
-  log('Http node listener for ""'+name+'"" started on port '+port);
+  log('Http node listener for "'+name+'" started on port '+port);
 
   master.init(port, id, name);
   ssdp.init(master);
