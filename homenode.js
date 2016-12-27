@@ -9,6 +9,30 @@ var server      = http.Server(app);
 
 var devices = [];
 
+function addDevice(device) {
+  devices.push(device);
+  master.notifyDeviceChange();
+  log('New device "'+device.name+'" registered.');
+}
+
+function removeDevice(id) {
+  var idx=-1;
+  devices.forEach(function(dev,i) {
+    if( dev.id==id ) {
+        idx=i;
+    }
+  });
+  if( idx!=-1 ) {
+    devices.splice(idx,1);
+    master.notifyDeviceChange();
+    log('Device "'+id+'" removed.');
+    return true;
+  } else {
+    log('Device with "'+id+'" not found.');
+    return false;
+  }
+}
+
 var listDevices = function(req,res) {
   log('List devices call');
   res.send(devices);
@@ -49,6 +73,7 @@ var def = {
 api.use(app,def);
 
 module.exports = init;
+
 function init(options) {
   var opt = options;
   if(!opt) {
@@ -66,10 +91,10 @@ function init(options) {
   ssdp.init(master);
 
   return {
-    addDevice : function(device) {
-      devices.push(device);
-      master.notifyDeviceChange();
-      log('New device "'+device.name+'" registered.');
+    addDevice : addDevice,
+    removeDevice : removeDevice,
+    addApi : function(def) {
+      api.use(app,def);
     }
   }
 }

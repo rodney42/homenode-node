@@ -6,12 +6,6 @@ var log         = require('./log.js')('master');
 
 var masterNodes = [];
 
-//masterNodes.push({
-//  host : '127.0.0.1',
-//  port : 9188,
-//  registered : false
-//});
-
 module.exports.masterNodes = masterNodes;
 
 var checkMasters = function () {

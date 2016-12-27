@@ -14,6 +14,8 @@ homenode.addDevice({
   state : 35.6
 });
 
+homenode.removeDevice('4322');
+
 homenode.addDevice({
   id : '4323',
   typ : 'sensor',
