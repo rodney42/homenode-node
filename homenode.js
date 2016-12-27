@@ -51,7 +51,7 @@ var executeDeviceAction = function(req,res) {
   } else {
     var action = getDeviceAction(devices[idx],req.params.actionname);
     if( action ) {
-      action.use();
+      action.use(req,res);
       res.sendStatus(200);
     } else {
       res.sendStatus(404);

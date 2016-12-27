@@ -1,6 +1,6 @@
 {
   "name": "homenode-node",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Homenode node library",
   "main": "homenode.js",
   "scripts": {
