@@ -1,0 +1,19 @@
+{
+  "name": "homenode-node",
+  "version": "0.0.1",
+  "description": "Homenode node library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.12.4",
+    "node-express-yourself": "0.0.4",
+    "node-ssdp": "^2.7.2"
+  },
+  "keywords": [
+    "homenode"
+  ],
+  "author": "Frank Klingebiel",
+  "license": "MIT"
+}
