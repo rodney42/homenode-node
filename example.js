@@ -6,22 +6,30 @@ var homenode = require('./homenode.js')(
   }
 );
 
-homenode.addDevice({
-  id : '4322',
+var temp1Device = homenode.addDevice({
+  id : 'temp1',
   typ : 'sensor',
   name : 'TempSensor',
   description : 'Temperator sensor outside',
-  state : 35.6
+  state : 35.6,
+  events : [
+    { name : "TempChange",
+      description : "The temparature reading changed"
+    }
+  ]
 });
 
-homenode.removeDevice('4322');
-
-homenode.addDevice({
-  id : '4323',
+var temp2Device =homenode.addDevice({
+  id : 'temp2',
   typ : 'sensor',
   name : 'TempSensor',
   description : 'Temperator sensor inside',
-  state : 21.6
+  state : 21.1,
+  events : [
+    { name : "TempChange",
+      description : "The temparature reading of the inside sensor changed"
+    }
+  ]
 });
 
 homenode.addDevice({
@@ -53,3 +61,11 @@ homenode.addDevice({
     }
   ]
 });
+
+// Simulate temparture change
+setInterval(function() {
+  temp1Device.state+=0.1;
+  temp2Device.state+=0.05;
+  temp1Device.fireEvent('TempChanged',temp1Device.state);
+  temp2Device.fireEvent('TempChanged',temp2Device.state);
+},6000);

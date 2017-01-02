@@ -34,8 +34,22 @@ function addDevice(device) {
     throw "Device ID must be set."
   }
   devices.push(device);
-  master.notifyDeviceChange();
+  device.fireEvent = function(eventName,payload) {
+    master.notify(
+      {
+        type : 'event',
+        device : device.id,
+        event : eventName,
+        payload : payload
+      }
+    );
+  }
+  master.notify( {
+    type: 'newdevice',
+    device : device.id
+  });
   log('New device "'+device.name+'" registered.');
+  return device;
 }
 
 var getDevice = function(req,res) {
@@ -152,9 +166,6 @@ function init(options) {
 
   return {
     addDevice : addDevice,
-    removeDevice : removeDevice,
-    addApi : function(def) {
-      api.use(app,def);
-    }
+    removeDevice : removeDevice
   }
 }

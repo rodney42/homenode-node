@@ -19,7 +19,7 @@ function init(master) {
 
   var search = function() {
     client.search('urn:homenode:device:Master:1');
-    log("Searching ...");
+    log("Searching for master ...");
   }
   setInterval(search, 10000);
 
@@ -32,13 +32,3 @@ function init(master) {
   }
 
 }
-
-// Or maybe if you want to scour for everything after 5 seconds
-//setTimeout(function() {
-//  client.search('ssdp:all')
-//}, 5000)
-
-// And after 10 seconds, you want to stop
-//setTimeout(function () {
-//  client.stop()
-//}, 10000)

@@ -3,7 +3,7 @@
  */
 var http        = require('http');
 var log         = require('./log.js')('master');
-
+var urlHelper   = require('url');
 var masterNodes = [];
 
 module.exports.masterNodes = masterNodes;
@@ -50,6 +50,7 @@ var registerWithMaster=function(masternode) {
     });
 
     res.on('end', function() {
+      log("Master data "+data);
       var masterInfo = JSON.parse(data);
       masternode.registered = new Date();
       masternode.lastHeartbeat = new Date();
@@ -105,21 +106,62 @@ module.exports.handleHeartbeat=function(masterid) {
   return true;
 }
 
+
+function obj(input) {
+  for( var p in input ) {
+    if( ! (typeof input[p] === 'function' ) ) {
+      console.log( p+':'+input[p]);
+    }
+  }
+}
+
 /**
- * Notify a device change
+ * Send a notify
  */
-module.exports.notifyDeviceChange = function() {
+module.exports.notify = function(data) {
+  var payload = {
+    type : data.type,
+    nodeid : local.id,
+    device : data.device,
+    event : data.event,
+    payload : data.payload,
+  }
+
+  var postData = JSON.stringify(payload);
+
   masterNodes.forEach( function(masternode) {
     if(masternode.registered) {
-      var fullurl = url(masternode, '/keeper/notify?type=device');
-      log("Device change url : "+fullurl)
-      http.get(fullurl, function(res) {
-        log("Device change notify done");
-        res.resume();
-      })
-      .on('error', function(e) {
-        log("Device change notify error "+e);
+      var notifyUrl = url(masternode, '/keeper/notify');
+      log("Notify url : "+notifyUrl);
+      var connectionData = urlHelper.parse(notifyUrl,true);
+      obj(connectionData);
+      var options = {
+        hostname: connectionData.hostname,
+        port: connectionData.port,
+        path: connectionData.path,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Content-Length': postData.length }
+      };
+      var req = http.request(options, function(res) {
+        log('STATUS: ' + res.statusCode);
+        log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+          log('PARTIAL BODY: ' + chunk);
+          data += chunk;
+        });
+        res.on('end', function() {
+           log('COMPLETE BODY: ' + data);
+        });
+        req.on('error', function(e) {
+           log('problem with request: ' + e.message);
+        });
       });
+      // write data to request body
+      req.write(postData);
+      log('Postdata:'+postData);
+      req.end();
     }
   });
 }
