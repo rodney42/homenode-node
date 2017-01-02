@@ -1,0 +1,103 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\DEV\\nodejs\\node.exe',
+1 verbose cli   'C:\\DEV\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'publish' ]
+2 info using npm@2.14.20
+3 info using node@v4.4.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: 'C:\\DEV\\Projekte\\homenode-node',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory C:\Users\Frank\AppData\Roaming\npm-cache\homenode-node\0.0.6\package.tgz not in flight; packing
+9 verbose correctMkdir C:\Users\Frank\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+10 verbose tar pack [ 'C:\\Users\\Frank\\AppData\\Roaming\\npm-cache\\homenode-node\\0.0.6\\package.tgz',
+10 verbose tar pack   'C:\\DEV\\Projekte\\homenode-node' ]
+11 verbose tarball C:\Users\Frank\AppData\Roaming\npm-cache\homenode-node\0.0.6\package.tgz
+12 verbose folder C:\DEV\Projekte\homenode-node
+13 info prepublish homenode-node@0.0.6
+14 verbose addLocalTarball adding from inside cache C:\Users\Frank\AppData\Roaming\npm-cache\homenode-node\0.0.6\package.tgz
+15 verbose correctMkdir C:\Users\Frank\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+16 silly cache afterAdd homenode-node@0.0.6
+17 verbose afterAdd C:\Users\Frank\AppData\Roaming\npm-cache\homenode-node\0.0.6\package\package.json not in flight; writing
+18 verbose correctMkdir C:\Users\Frank\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+19 verbose afterAdd C:\Users\Frank\AppData\Roaming\npm-cache\homenode-node\0.0.6\package\package.json written
+20 silly publish { name: 'homenode-node',
+20 silly publish   version: '0.0.6',
+20 silly publish   description: 'Homenode node library',
+20 silly publish   main: 'homenode.js',
+20 silly publish   scripts: { test: 'echo "Error: no test specified" && exit 1' },
+20 silly publish   dependencies:
+20 silly publish    { express: '^4.12.4',
+20 silly publish      'node-express-yourself': '0.0.4',
+20 silly publish      'node-ssdp': '^2.7.2' },
+20 silly publish   keywords: [ 'homenode' ],
+20 silly publish   repository:
+20 silly publish    { type: 'git',
+20 silly publish      url: 'git+https://github.com/rodney42/homenode-node.git' },
+20 silly publish   author: { name: 'Frank Klingebiel' },
+20 silly publish   license: 'MIT',
+20 silly publish   readme: 'Homenode node\n-------------\n\nnode.js library to connect a client node with a masterNodes\n\n   npm install homenode-node\n\nSee example.js for usage.\n',
+20 silly publish   readmeFilename: 'readme.md',
+20 silly publish   gitHead: '9930b5b3bc514fe9c64a77fa0570784285a77553',
+20 silly publish   bugs: { url: 'https://github.com/rodney42/homenode-node/issues' },
+20 silly publish   homepage: 'https://github.com/rodney42/homenode-node#readme',
+20 silly publish   _id: 'homenode-node@0.0.6',
+20 silly publish   _shasum: '6379831e5b478355383c7a511f2d90b0c807ec7b',
+20 silly publish   _from: '.' }
+21 verbose getPublishConfig undefined
+22 silly mapToRegistry name homenode-node
+23 silly mapToRegistry using default registry
+24 silly mapToRegistry registry https://registry.npmjs.org/
+25 silly mapToRegistry uri https://registry.npmjs.org/homenode-node
+26 verbose publish registryBase https://registry.npmjs.org/
+27 silly publish uploading C:\Users\Frank\AppData\Roaming\npm-cache\homenode-node\0.0.6\package.tgz
+28 verbose request uri https://registry.npmjs.org/homenode-node
+29 verbose request sending authorization for write operation
+30 info attempt registry request try #1 at 10:13:56
+31 verbose request using bearer token for auth
+32 verbose request id 8f0b3335730a22cb
+33 http request PUT https://registry.npmjs.org/homenode-node
+34 http 403 https://registry.npmjs.org/homenode-node
+35 verbose headers { 'content-type': 'application/json',
+35 verbose headers   'cache-control': 'max-age=300',
+35 verbose headers   'content-length': '95',
+35 verbose headers   'accept-ranges': 'bytes',
+35 verbose headers   date: 'Mon, 02 Jan 2017 09:13:57 GMT',
+35 verbose headers   via: '1.1 varnish',
+35 verbose headers   connection: 'keep-alive',
+35 verbose headers   'x-served-by': 'cache-fra1242-FRA',
+35 verbose headers   'x-cache': 'MISS',
+35 verbose headers   'x-cache-hits': '0',
+35 verbose headers   'x-timer': 'S1483348435.946342,VS0,VE1234',
+35 verbose headers   vary: 'Accept-Encoding' }
+36 verbose request invalidating C:\Users\Frank\AppData\Roaming\npm-cache\registry.npmjs.org\homenode-node on PUT
+37 error publish Failed PUT 403
+38 verbose stack Error: "You cannot publish over the previously published version 0.0.6." : homenode-node
+38 verbose stack     at makeError (C:\DEV\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:264:12)
+38 verbose stack     at CachingRegistryClient.<anonymous> (C:\DEV\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:252:14)
+38 verbose stack     at Request._callback (C:\DEV\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:172:14)
+38 verbose stack     at Request.self.callback (C:\DEV\nodejs\node_modules\npm\node_modules\request\request.js:199:22)
+38 verbose stack     at emitTwo (events.js:87:13)
+38 verbose stack     at Request.emit (events.js:172:7)
+38 verbose stack     at Request.<anonymous> (C:\DEV\nodejs\node_modules\npm\node_modules\request\request.js:1036:10)
+38 verbose stack     at emitOne (events.js:82:20)
+38 verbose stack     at Request.emit (events.js:169:7)
+38 verbose stack     at IncomingMessage.<anonymous> (C:\DEV\nodejs\node_modules\npm\node_modules\request\request.js:963:12)
+39 verbose statusCode 403
+40 verbose pkgid homenode-node
+41 verbose cwd C:\DEV\Projekte\homenode-node
+42 error Windows_NT 10.0.14393
+43 error argv "C:\\DEV\\nodejs\\node.exe" "C:\\DEV\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "publish"
+44 error node v4.4.0
+45 error npm  v2.14.20
+46 error code E403
+47 error "You cannot publish over the previously published version 0.0.6." : homenode-node
+48 error If you need help, you may report this error at:
+48 error     <https://github.com/npm/npm/issues>
+49 verbose exit [ 1, true ]
