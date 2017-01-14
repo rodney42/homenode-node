@@ -89,10 +89,8 @@ function removeDevice(id) {
   if( idx!=-1 ) {
     devices.splice(idx,1);
     master.notify({
-      {
-        type: 'removeddevice',
-        device : id
-      }
+      type: 'removeddevice',
+      device : id
     });
     log('Device "'+id+'" removed.');
     return true;

@@ -74,3 +74,29 @@ setInterval(function() {
 setInterval(function() {
   homenode.getDevice('1234').fireEvent('triggered');
 },50000);
+
+// Simulate device add and remove
+// Simulate switch
+setInterval(function() {
+  var id = 'testDev';
+  if( homenode.getDevice(id) ) {
+    homenode.removeDevice(id);
+  } else {
+    homenode.addDevice({
+      id : id,
+      typ : 'switch',
+      name : 'Test switch device',
+      state : 'on',
+      description : 'Example switch always added and removed',
+      actions : [
+        {
+          name : 'dosomething',
+          description : 'Does something',
+          use : function() {
+            console.log("Have done it.");
+          }
+        }
+      ]
+    });
+  }
+},10600);
