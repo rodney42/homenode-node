@@ -4,6 +4,7 @@ var SSDP        = require('node-ssdp').Client;
 module.exports.init=init;
 function init(master) {
   var client = new SSDP({
+  
     //    unicastHost: '192.168.11.63'
   });
 
@@ -20,6 +21,7 @@ function init(master) {
   var search = function() {
     client.search('urn:homenode:device:Master:1');
     log("Searching for master ...");
+    //client.search('ssdp:all');
   }
   setInterval(search, 10000);
 

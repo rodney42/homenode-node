@@ -33,17 +33,20 @@ function addDevice(device) {
   if( !device.id ) {
     throw "Device ID must be set."
   }
-  devices.push(device);
   device.fireEvent = function(eventName,payload) {
     master.notify(
       {
         type : 'event',
-        device : device.id,
         event : eventName,
+        device : device.id,
+        state : device.state,
         payload : payload
       }
     );
   }
+
+  devices.push(device);
+
   master.notify( {
     type: 'newdevice',
     device : device.id
@@ -62,11 +65,8 @@ var getDevice = function(req,res) {
 }
 
 var executeDeviceAction = function(req,res) {
-  var idx = getDeviceIndex(req.params.deviceid);
-  if( idx==-1 ) {
-    res.sendStatus(404);
-  } else {
-    var device = devices[idx];
+  var device = getDeviceById(req.params.deviceid);
+  if( device ) {
     var action = getDeviceAction(device, req.params.actionname);
     if( action ) {
       action.use(device,action);
@@ -74,7 +74,14 @@ var executeDeviceAction = function(req,res) {
     } else {
       res.sendStatus(404);
     }
+  } else {
+    res.sendStatus(404);
   }
+}
+
+function getDeviceById(id) {
+  var idx = getDeviceIndex(id);
+  return (idx==-1 ? null : devices[idx]);
 }
 
 function removeDevice(id) {
@@ -166,6 +173,7 @@ function init(options) {
 
   return {
     addDevice : addDevice,
+    getDevice : getDeviceById,
     removeDevice : removeDevice
   }
 }

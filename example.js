@@ -68,4 +68,9 @@ setInterval(function() {
   temp2Device.state+=0.05;
   temp1Device.fireEvent('TempChanged',temp1Device.state);
   temp2Device.fireEvent('TempChanged',temp2Device.state);
-},6000);
+},40100);
+
+// Simulate switch
+setInterval(function() {
+  homenode.getDevice('1234').fireEvent('triggered');
+},50000);

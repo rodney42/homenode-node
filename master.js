@@ -119,22 +119,17 @@ function obj(input) {
  * Send a notify
  */
 module.exports.notify = function(data) {
-  var payload = {
-    type : data.type,
-    nodeid : local.id,
-    device : data.device,
-    event : data.event,
-    payload : data.payload,
-  }
 
-  var postData = JSON.stringify(payload);
+  data.node = local.id;
+
+  var postData = JSON.stringify(data);
 
   masterNodes.forEach( function(masternode) {
     if(masternode.registered) {
       var notifyUrl = url(masternode, '/keeper/notify');
       log("Notify url : "+notifyUrl);
       var connectionData = urlHelper.parse(notifyUrl,true);
-      obj(connectionData);
+      //obj(connectionData);
       var options = {
         hostname: connectionData.hostname,
         port: connectionData.port,
@@ -144,15 +139,8 @@ module.exports.notify = function(data) {
       };
       var req = http.request(options, function(res) {
         log('STATUS: ' + res.statusCode);
-        log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function (chunk) {
-          log('PARTIAL BODY: ' + chunk);
-          data += chunk;
-        });
         res.on('end', function() {
-           log('COMPLETE BODY: ' + data);
+           //log('COMPLETE BODY: ' + data);
         });
         req.on('error', function(e) {
            log('problem with request: ' + e.message);

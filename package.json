@@ -1,6 +1,6 @@
 {
   "name": "homenode-node",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Homenode node library",
   "main": "homenode.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "express": "^4.12.4",
-    "node-express-yourself": "0.0.4",
+    "node-express-yourself": "0.0.5",
     "node-ssdp": "^2.7.2"
   },
   "keywords": [
